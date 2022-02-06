@@ -37,10 +37,24 @@ export class ElbowDrop extends LitElement {
 
   render() {
     return html`
-      <div class="container">
+      <div class="container" @dragover=${this.onDragOver} @drop=${this.onDrop}>
         <p>Drop here</p>
       </div>
-      <elbow-drag></elbow-drag>
+      <elbow-drag name="drag-1"></elbow-drag>
     `;
+  }
+
+  onDragOver(e) {
+    e.preventDefault();
+  }
+
+  onDrop(e) {
+    const id = e.dataTransfer.getData('text');
+    console.log(id);
+    const draggableElement = document.getElementById(id);
+    console.log(draggableElement);
+    const dropzone = e.target;
+    dropzone.appendChild(draggableElement);
+    e.dataTransfer.clearData();
   }
 }

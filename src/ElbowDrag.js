@@ -1,6 +1,10 @@
 import { LitElement, html, css } from 'lit';
 
 export class ElbowDrag extends LitElement {
+  static properties = {
+    name: { type: String },
+  };
+
   static get styles() {
     return css`
       .container {
@@ -11,30 +15,28 @@ export class ElbowDrag extends LitElement {
     `;
   }
 
+  constructor() {
+    super();
+    this.identifier = 'eee';
+    this.name = 'test';
+  }
+
   render() {
     return html`
       <div
+        id=${this.name}
         class="container"
         draggable="true"
         @dragstart=${this.onDragStart}
-        @click=${this.onClick}
-        @keyup=${this.onKeyup}
       >
-        <p>Drag me</p>
+        <p>Drag me ${this.name}</p>
       </div>
     `;
   }
 
-  static onKeyup(e) {
-    console.log(e.currentTarget);
-  }
-
-  static onClick(e) {
-    console.log(e.currentTarget);
-  }
-
   onDragStart(e) {
-    console.log(e.currentTarget);
+    //console.log(e.currentTarget);
+    //console.log(e.target.id);
     e.dataTransfer.setData('text/plain', e.target.id);
     e.currentTarget.style.backgroundColor = 'yellow';
   }
